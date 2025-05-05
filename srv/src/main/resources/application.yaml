@@ -1,0 +1,58 @@
+
+---
+spring:
+  config:
+    activate:
+      on-profile: default
+  sql:
+    init:
+      platform: h2
+cds:
+  data-source:
+    auto-config:
+      enabled: false
+  remote:
+    services:
+      '[CE_FREIGHTORDER_0001]':
+        http:
+          suffix: "/sap/opu/odata4/sap/api_freightorder/srvd_a2x/sap/freightorder/0001"
+        destination:
+          name: CE_FREIGHTORDER_0001
+        type: odata-v4
+  messaging:
+    services:
+      freightorderattachjava-messaging:
+        name: "freightorderattachjava-messaging"
+        subscribePrefix: '$namespace/'
+        publishPrefix: '$namespace/'
+        kind: "enterprise-messaging"
+        queue:
+          name: '$namespace/capjava'
+  security:
+    mock.users:
+      alice:
+        roles: [ admin, support ]
+      bob:
+        roles: [ support ]
+logging:
+  level:
+    '[com.sap.cds.messaging]': DEBUG
+    '[com.sap.cloud.security]': DEBUG
+    '[org.apache.http.wire]': DEBUG
+    '[com.sap.cds.auditlog]': DEBUG
+    '[com.sap.cds.security.authorization]': DEBUG
+    '[com.sap.cds.security.authentication]': DEBUG
+---
+management:
+  endpoint:
+    health:
+      show-components: always
+      probes.enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    defaults.enabled: false
+    ping.enabled: true
+    db.enabled: true

@@ -1,0 +1,19 @@
+{
+  "requires": {
+    "[default]": {
+      "custom-service:freightorderattachjava-messaging": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.eu10.hana.ondemand.com",
+          "org": "APJEXTABAPORG",
+          "space": "dev",
+          "instance": "freightorderattachjava-messaging",
+          "key": "em-key"
+        },
+        "vcap": {
+          "name": "custom-service:freightorderattachjava-messaging"
+        }
+      }
+    }
+  }
+}
