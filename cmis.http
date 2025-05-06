@@ -1,0 +1,74 @@
+//from uri in sdm-key
+@cmisuri = https://api-sdm-di.cfapps.eu10.hana.ondemand.com
+
+//from uaa/clientid in sdm-key
+@cmisclientid = sb-769202bd-cbfd-4a88-b3bf-8d56fb27e41e!b149617|sdm-di-SDM_DI_PROD-prod!b41064
+//from uaa/clientsecret in sdm-key
+@cmisclientsecret = 05b385f0-df1b-447e-9a53-d3bc9d88190a$mBz68cCqs0-GHMIczQBnUOA3LCO6NxqDcjXLHPeT3IY=
+
+//from uaa/url in sdm-key
+@cmistokenurl = https://apjextabapsubdomain.authentication.eu10.hana.ondemand.com
+
+
+# @name getToken
+POST {{cmistokenurl}}/oauth/token HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {{cmisclientid}}:{{cmisclientsecret}}
+
+client_id={{cmisclientid}}
+&grant_type=client_credentials
+
+###
+
+# @name createRepository
+@authToken = {{getToken.response.body.access_token}}
+POST {{cmisuri}}/rest/v2/repositories HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+	{
+		"repository": {
+			"displayName": "freightorderattach",
+			"description": "freightorderattach",
+			"repositoryType": "internal",
+			"isVersionEnabled":"false",
+			"isVirusScanEnabled":"false",
+			"skipVirusScanForLargeFile": "false",
+			"isThumbnailEnabled": "false",
+			"isEncryptionEnabled": "false",
+			"isClientCacheEnabled": "false",
+			"hashAlgorithms":"SHA-256",
+			"isContentBridgeEnabled" : "false" 
+			}
+	}
+
+
+
+###
+
+# @name getRepository
+@authToken = {{getToken.response.body.access_token}}
+GET {{cmisuri}}/browser HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+
+
+###
+
+# @name delRepository
+@authToken = {{getToken.response.body.access_token}}
+DELETE  {{cmisuri}}/browser/zfoattachment008 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+
+
+
+
+
+
+
+
+
+

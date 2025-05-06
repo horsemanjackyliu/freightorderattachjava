@@ -199,3 +199,22 @@ cap/attch/java/ce/sap/s4/beh/FreightOrder/Created/v1
 
 ```
 
+- 2. Create service instance for SAP Document Management Service and Service key under the service instance with the following commands:
+
+```bash
+  cf create-service sdm standard freightorderattachjava-sdm
+
+  cf service freightorderattachjava-sdm
+
+  cf create-service-key freightorderattachjava-sdm sdm-key
+```
+- 3. Get the Service key content with the following commands, this content will be used for onboarding sdm repository in BAS.
+
+  ```bash
+  cf service-key freightorderattachjava-sdm sdm-key
+  ```
+
+  - 4. Onboarding SAP Document Management Service repository.
+
+    Then click on `Send Request` under `createRepository`.
+    ![alt text](./img/image.png)

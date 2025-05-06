@@ -17,7 +17,7 @@ cds:
         http:
           suffix: "/sap/opu/odata4/sap/api_freightorder/srvd_a2x/sap/freightorder/0001"
         destination:
-          name: CE_FREIGHTORDER_0001
+          name: "my300018"
         type: odata-v4
   messaging:
     services:
@@ -25,7 +25,7 @@ cds:
         name: "freightorderattachjava-messaging"
         subscribePrefix: '$namespace/'
         publishPrefix: '$namespace/'
-        kind: "enterprise-messaging"
+        kind: enterprise-messaging
         queue:
           name: '$namespace/capjava'
   security:
@@ -47,12 +47,16 @@ management:
   endpoint:
     health:
       show-components: always
-      probes.enabled: true
+      probes:
+        enabled: true
   endpoints:
     web:
       exposure:
         include: health
   health:
-    defaults.enabled: false
-    ping.enabled: true
-    db.enabled: true
+    defaults:
+      enabled: false
+    ping:
+      enabled: true
+    db:
+      enabled: true
