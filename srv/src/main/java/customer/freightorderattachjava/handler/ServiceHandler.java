@@ -65,14 +65,6 @@ public class ServiceHandler implements EventHandler {
                 .where(b -> b.TransportationOrderUUID().eq(freightOrderUuid));
         List<FreightOrderItem> freightOrderItems = remotService.run(queryItems).listOf(FreightOrderItem.class);
 
-        SRVFreightOrder dbfreightOrder = cds.gen.adminservice.SRVFreightOrder.create();
-
-        dbfreightOrder.setTransportationOrderUUID(freightOrder.getTransportationOrderUUID());
-        dbfreightOrder.setTransportationOrder(freightOrder.getTransportationOrder());
-        dbfreightOrder.setTranspOrdExecutingCarrier(freightOrder.getTranspOrdExecutingCarrier());
-        dbfreightOrder.setCarrier(freightOrder.getCarrier());
-        dbfreightOrder.setCarrierAccountNumber(freightOrder.getCarrierAccountNumber());
-
         List<SRVFreightOrderItem> dbFreightOrderItems = freightOrderItems.stream().map(item -> {
             SRVFreightOrderItem dbItem = cds.gen.adminservice.SRVFreightOrderItem.create();
 
@@ -96,14 +88,98 @@ public class ServiceHandler implements EventHandler {
             dbItem.setSourceStopUUID(item.getSourceStopUUID());
             dbItem.setTranspBaseDocumentItem(item.getTranspBaseDocumentItem());
             dbItem.setTranspBaseDocumentItemType(item.getTranspBaseDocumentItemType());
+            dbItem.setTranspBaseDocumentType(item.getTranspBaseDocumentType());
+            dbItem.setTranspEquipCapacityHeight(item.getTranspEquipCapacityHeight());
+            dbItem.setTranspEquipCapacityLength(item.getTranspEquipCapacityLength());
+            dbItem.setTranspEquipCapacityUnit(item.getTranspEquipCapacityUnit());
+            dbItem.setTranspEquipCapacityVolume(item.getTranspEquipCapacityVolume());
+            dbItem.setTranspEquipCapacityVolumeUnit(item.getTranspEquipCapacityVolumeUnit());
+            dbItem.setTranspEquipCapacityWeight(item.getTranspEquipCapacityWeight());
+            dbItem.setTranspEquipCapacityWeightUnit(item.getTranspEquipCapacityWeightUnit());
+            dbItem.setTranspEquipCapacityWidth(item.getTranspEquipCapacityWidth());
+            dbItem.setTranspEquipRegistrationCountry(item.getTranspEquipRegistrationCountry());
+            dbItem.setTranspEquipmentIsShipperOwned(item.getTranspEquipmentIsShipperOwned());
+            dbItem.setTranspEquipmentPlateNumber(item.getTranspEquipmentPlateNumber());
+            dbItem.setTranspOrdItem(item.getTranspOrdItem());
+            dbItem.setTranspOrdItemCategory(item.getTranspOrdItemCategory());
+            dbItem.setTranspOrdItemDesc(item.getTranspOrdItemDesc());
+            dbItem.setTranspOrdItemGrossVolume(item.getTranspOrdItemGrossVolume());
+            dbItem.setTranspOrdItemGrossVolumeUnit(item.getTranspOrdItemGrossVolumeUnit());
+            dbItem.setTranspOrdItemNetWeight(item.getTranspOrdItemNetWeight());
+            dbItem.setTranspOrdItemNetWeightUnit(item.getTranspOrdItemNetWeightUnit());
+            dbItem.setTranspOrdItemPackageID(item.getTranspOrdItemPackageID());
+            dbItem.setTranspOrdItemParentItemUUID(item.getTranspOrdItemParentItemUUID());
+            dbItem.setTranspOrdItemQuantity(item.getTranspOrdItemQuantity());
+            dbItem.setTranspOrdItemQuantityUnit(item.getTranspOrdItemQuantityUnit());
+            dbItem.setTranspOrdItemSorting(item.getTranspOrdItemSorting());
+            dbItem.setTranspOrdItemTemperatureUnit(item.getTranspOrdItemTemperatureUnit());
+            dbItem.setTranspOrdItemType(item.getTranspOrdItemType());
+            dbItem.setTranspOrdItmMaxTemp(item.getTranspOrdItmMaxTemp());
+            dbItem.setTranspOrdItmMinTemp(item.getTranspOrdItmMinTemp());
+            dbItem.setTransportationEquipmentGroup(item.getTransportationEquipmentGroup());
+            dbItem.setTransportationEquipmentType(item.getTransportationEquipmentType());
+            dbItem.setTransportationGroup(item.getTransportationGroup());
+            dbItem.setTransportationOrderItemUUID(item.getTransportationOrderItemUUID());
 
             // Add more field mappings as needed
 
             return dbItem;
         }).toList();
 
+        SRVFreightOrder dbfreightOrder = cds.gen.adminservice.SRVFreightOrder.create();
+
+        dbfreightOrder.setFreightOrderItems(dbFreightOrderItems);
+
+        dbfreightOrder.setTransportationOrderUUID(freightOrder.getTransportationOrderUUID());
+        dbfreightOrder.setTransportationOrder(freightOrder.getTransportationOrder());
+        dbfreightOrder.setTranspOrdExecutingCarrier(freightOrder.getTranspOrdExecutingCarrier());
+        dbfreightOrder.setCarrier(freightOrder.getCarrier());
+        dbfreightOrder.setCarrierAccountNumber(freightOrder.getCarrierAccountNumber());
+        dbfreightOrder.setCarrierUUID(freightOrder.getCarrierUUID());
+        dbfreightOrder.setConsignee(freightOrder.getConsignee());
+        dbfreightOrder.setConsigneeAddressID(freightOrder.getConsigneeAddressID());
+        dbfreightOrder.setConsigneeUUID(freightOrder.getConsigneeUUID());
+        dbfreightOrder.setCreatedByUser(freightOrder.getCreatedByUser());
+        dbfreightOrder.setPurgOrgCompanyCode(freightOrder.getPurgOrgCompanyCode());
+        dbfreightOrder.setShipper(freightOrder.getShipper());
+        dbfreightOrder.setShipperAddressID(freightOrder.getShipperAddressID());
+        dbfreightOrder.setShipperUUID(freightOrder.getShipperUUID());
+        dbfreightOrder.setStandardCarrierAlphaCode(freightOrder.getStandardCarrierAlphaCode());
+        dbfreightOrder.setTransportationOrder(freightOrder.getTransportationOrder());
+        dbfreightOrder.setTransportationOrderCategory(freightOrder.getTransportationOrderCategory());
+        dbfreightOrder.setTransportationOrderConfSts(freightOrder.getTransportationOrderConfSts());
+        dbfreightOrder.setTransportationOrderCrtnType(freightOrder.getTransportationOrderCrtnType());
+        dbfreightOrder.setTransportationOrderExecSts(freightOrder.getTransportationOrderExecSts());
+        dbfreightOrder.setTransportationOrderType(freightOrder.getTransportationOrderType());
+        dbfreightOrder.setTranspMeansOfTransport(freightOrder.getTranspMeansOfTransport());
+        dbfreightOrder.setTranspOrdExecutingCarrier(freightOrder.getTranspOrdExecutingCarrier());
+        dbfreightOrder.setTranspOrdExecutingCarrierUUID(freightOrder.getTranspOrdExecutingCarrierUUID());
+        dbfreightOrder.setTranspOrdExecutionIsBlocked(freightOrder.getTranspOrdExecutionIsBlocked());
+        dbfreightOrder.setTranspOrdGoodsMovementStatus(freightOrder.getTranspOrdGoodsMovementStatus());
+        dbfreightOrder.setTranspOrdHasMltplExectgPties(freightOrder.getTranspOrdHasMltplExectgPties());
+        dbfreightOrder.setTranspOrdInvoicingCarrierLevel(freightOrder.getTranspOrdInvoicingCarrierLevel());
+        dbfreightOrder.setTranspOrdLifeCycleStatus(freightOrder.getTranspOrdLifeCycleStatus());
+        dbfreightOrder.setTranspOrdPartnerReference(freightOrder.getTranspOrdPartnerReference());
+        dbfreightOrder.setTranspOrdResponsiblePerson(freightOrder.getTranspOrdResponsiblePerson());
+        dbfreightOrder.setTranspOrdWhseProcessingStatus(freightOrder.getTranspOrdWhseProcessingStatus());
+        dbfreightOrder.setTranspOrderDngrsGdsSts(freightOrder.getTranspOrderDngrsGdsSts());
+        dbfreightOrder.setTranspOrderSubcontrgSts(freightOrder.getTranspOrderSubcontrgSts());
+        dbfreightOrder.setTranspPurgGroup(freightOrder.getTranspPurgGroup());
+        dbfreightOrder.setTranspPurgGroupExtID(freightOrder.getTranspPurgGroupExtID());
+        dbfreightOrder.setTranspPurgOrg(freightOrder.getTranspPurgOrg());
+        dbfreightOrder.setTranspPurgOrgExtID(freightOrder.getTranspPurgOrgExtID());
+        dbfreightOrder.setTransportationMode(freightOrder.getTransportationMode());
+        dbfreightOrder.setTransportationModeCategory(freightOrder.getTransportationModeCategory());
+        dbfreightOrder.setTransportationOrder(freightOrder.getTransportationOrder());
+        dbfreightOrder.setTransportationOrderCategory(freightOrder.getTransportationOrderCategory());
+        dbfreightOrder.setTransportationOrderConfSts(freightOrder.getTransportationOrderConfSts());
+        dbfreightOrder.setTransportationOrderCrtnType(freightOrder.getTransportationOrderCrtnType());
+        dbfreightOrder.setTransportationOrderExecSts(freightOrder.getTransportationOrderExecSts());
+        dbfreightOrder.setTransportationOrderType(freightOrder.getTransportationOrderType());
+        dbfreightOrder.setTransportationShippingType(freightOrder.getTransportationShippingType());
+
         db.run(Insert.into(cds.gen.adminservice.SRVFreightOrder_.class).entry(dbfreightOrder));
-        db.run(Insert.into(cds.gen.adminservice.SRVFreightOrderItem_.class).entries(dbFreightOrderItems));
+        // db.run(Insert.into(cds.gen.adminservice.SRVFreightOrderItem_.class).entries(dbFreightOrderItems));
 
         // logger.info(msgId);
         // logger.info(payloadMap.toString());
@@ -116,6 +192,8 @@ public class ServiceHandler implements EventHandler {
                 .columns("TransportationOrderUUID", "TransportationOrder", " TranspOrdExecutingCarrier").limit(20);
 
         Result result = remotService.run(query);
+
+        logger.info("Fetched Freight Orders: " + result.list().size());
 
         context.setResult(result);
 
