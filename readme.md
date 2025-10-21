@@ -1,12 +1,11 @@
-
-
 cds init freightorderattach
-
 
 ```
 cds init freightorderattachjava --java
 ```
+
 create schema.cds under folder db with the following code .
+
 ```
 namespace sap.freightorder.db;
 
@@ -127,6 +126,7 @@ srv/pom.xml
 ```
 
 srv/attachment-extension.cds
+
 ```js
 using { sap.freightorder.db.DBFreightOrderItem } from '../db/schema';
 using { sap.attachments.Attachments } from`com.sap.cds/sdm`;
@@ -136,8 +136,8 @@ extend entity DBFreightOrderItem with {
 }
 ```
 
-
 srv/pom.xml
+
 ```
 <dependency>
   <groupId>com.sap.cds</groupId>
@@ -157,23 +157,21 @@ cds:
 
 ```
 
-
-
 cds import srv/external/CE_FREIGHTORDER_0001.edmx --as cds
-
-
-
 
 ```bash
 
 cf create-service enterprise-messaging default freightorderattachjava-messaging -c event-mesh.json
 cf create-service-key freightorderattachjava-messaging em-key
-cds bind -2 freightorderattachjava-messaging:em-key 
+cds bind -2 freightorderattachjava-messaging:em-key
+
+
+cf create-service destination lite freightorderattachjava-destination
+cf create-service-key freightorderattachjava-destination key
+cds bind -2 freightorderattachjava-destination:key
 
 
 ```
-
-
 
 cap/attch/java/ce/sap/s4/beh/FreightOrder/Created/v1
 
@@ -208,6 +206,7 @@ cap/attch/java/ce/sap/s4/beh/FreightOrder/Created/v1
 
   cf create-service-key freightorderattachjava-sdm sdm-key
 ```
+
 - 3. Get the Service key content with the following commands, this content will be used for onboarding sdm repository in BAS.
 
   ```bash

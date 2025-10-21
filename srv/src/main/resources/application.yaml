@@ -1,4 +1,3 @@
-
 ---
 spring:
   config:
@@ -8,40 +7,55 @@ spring:
     init:
       platform: h2
 cds:
+  security:
+    mock:
+      users:
+        bob:
+          roles:
+            - support
+        alice:
+          roles:
+            - admin
+            - support
   data-source:
     auto-config:
       enabled: false
   remote:
     services:
-      '[CE_FREIGHTORDER_0001]':
-        http:
-          suffix: "/sap/opu/odata4/sap/api_freightorder/srvd_a2x/sap/freightorder/0001"
+      "[FREIGHTORDER_0001]":
         destination:
-          name: "my300018"
+          name: my300018
+        http:
+          headers:
+            sap-language: EN
+            Accept: application/json
+          service: freightorder/0001
+          suffix: /sap/opu/odata4/sap/api_freightorder/srvd_a2x/sap
+          timeout: 30000
+        model: FREIGHTORDER_0001
         type: odata-v4
   messaging:
-    services:
-      freightorderattachjava-messaging:
-        name: "freightorderattachjava-messaging"
-        subscribePrefix: '$namespace/'
-        publishPrefix: '$namespace/'
-        kind: enterprise-messaging
-        queue:
-          name: '$namespace/capjava'
-  security:
-    mock.users:
-      alice:
-        roles: [ admin, support ]
-      bob:
-        roles: [ support ]
+    services[0]:
+      subscribePrefix: $namespace/
+      publishPrefix: $namespace/
+      kind: enterprise-messaging
+      bindings: freightorderattachjava-messaging
+      name: freightorderattachjava-messaging
+      format: cloudevents
+      structured: true
+      events:
+        - cap/attch/java/ce/sap/s4/beh/FreightOrder/Created/v1
+      queue:
+        forceListening: true
+        name: $namespace/capjava
 logging:
   level:
-    '[com.sap.cds.messaging]': DEBUG
-    '[com.sap.cloud.security]': DEBUG
-    '[org.apache.http.wire]': DEBUG
-    '[com.sap.cds.auditlog]': DEBUG
-    '[com.sap.cds.security.authorization]': DEBUG
-    '[com.sap.cds.security.authentication]': DEBUG
+    "[com.sap.cds.messaging]": DEBUG
+    "[com.sap.cloud.security]": DEBUG
+    "[org.apache.http.wire]": DEBUG
+    "[com.sap.cds.auditlog]": DEBUG
+    "[com.sap.cds.security.authorization]": DEBUG
+    "[com.sap.cds.security.authentication]": DEBUG
 ---
 management:
   endpoint:

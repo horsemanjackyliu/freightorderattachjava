@@ -1,6 +1,6 @@
-/* checksum : 45c4a8fa1a678d940577b2dc1c63059f */
+/* checksum : b19b082686dd7e6796a06e3b9090d33a */
 @cds.external : true
-type CE_FREIGHTORDER_0001.D_FreightOrderCrteForPkupItmP {
+type FREIGHTORDER_0001.D_FreightOrderCrteForPkupItmP {
   @Common.FieldControl : #Mandatory
   @Common.Label : 'Item UUID'
   @Common.QuickInfo : 'Freight Booking Item UUID'
@@ -8,7 +8,7 @@ type CE_FREIGHTORDER_0001.D_FreightOrderCrteForPkupItmP {
 };
 
 @cds.external : true
-type CE_FREIGHTORDER_0001.D_FreightOrdCrteForDelivItmP {
+type FREIGHTORDER_0001.D_FreightOrdCrteForDelivItmP {
   @Common.FieldControl : #Mandatory
   @Common.Label : 'Item UUID'
   @Common.QuickInfo : 'Freight Booking Item UUID'
@@ -16,38 +16,42 @@ type CE_FREIGHTORDER_0001.D_FreightOrdCrteForDelivItmP {
 };
 
 @cds.external : true
-type CE_FREIGHTORDER_0001.D_FreightUnitAssignParameter {
+type FREIGHTORDER_0001.D_FreightUnitAssignParameter {
   @Common.Label : 'Freight Unit UUID'
   FreightUnitUUID : UUID;
 };
 
 @cds.external : true
-type CE_FREIGHTORDER_0001.D_FreightUnitUnassignParameter {
+type FREIGHTORDER_0001.D_FreightUnitUnassignParameter {
   @Common.Label : 'Freight Unit UUID'
   FreightUnitUUID : UUID;
 };
 
 @cds.external : true
-type CE_FREIGHTORDER_0001.SAP__Message {
-  code : LargeString not null;
-  message : LargeString not null;
-  target : LargeString;
-  additionalTargets : many LargeString not null;
+type FREIGHTORDER_0001.D_TranspOrdReportEventItemP {
+  @Common.Label : 'UUID of TO Item'
+  @Common.Heading : 'UUID of Transportation Order Item with Conversion Exit'
+  @Common.QuickInfo : 'UUID of Transportation Order Item with Conversion Exit'
+  TransportationOrderItemUUID : UUID;
+};
+
+@cds.external : true
+type FREIGHTORDER_0001.SAP__Message {
+  code : String not null;
+  message : String not null;
+  target : String;
+  additionalTargets : many String not null;
   transition : Boolean not null;
   @odata.Type : 'Edm.Byte'
   numericSeverity : Integer not null;
-  longtextUrl : LargeString;
+  longtextUrl : String;
 };
 
 @cds.external : true
-@CodeList.CurrencyCodes : {
-  Url: '../../../../default/iwbep/common/0001/$metadata',
-  CollectionPath: 'Currencies'
-}
-@CodeList.UnitsOfMeasure : {
-  Url: '../../../../default/iwbep/common/0001/$metadata',
-  CollectionPath: 'UnitsOfMeasure'
-}
+@CodeList.CurrencyCodes.Url : '../../../../default/iwbep/common/0001/$metadata'
+@CodeList.CurrencyCodes.CollectionPath : 'Currencies'
+@CodeList.UnitsOfMeasure.Url : '../../../../default/iwbep/common/0001/$metadata'
+@CodeList.UnitsOfMeasure.CollectionPath : 'UnitsOfMeasure'
 @Common.ApplyMultiUnitBehaviorForSortingAndFiltering : true
 @Capabilities.FilterFunctions : [
   'eq',
@@ -65,29 +69,27 @@ type CE_FREIGHTORDER_0001.SAP__Message {
   'all'
 ]
 @Capabilities.SupportedFormats : [ 'application/json', 'application/pdf' ]
-@PDF.Features : {
-  DocumentDescriptionReference: '../../../../default/iwbep/common/0001/$metadata',
-  DocumentDescriptionCollection: 'MyDocumentDescriptions',
-  ArchiveFormat: true,
-  Border: true,
-  CoverPage: true,
-  FitToPage: true,
-  FontName: true,
-  FontSize: true,
-  HeaderFooter: true,
-  IANATimezoneFormat: true,
-  Margin: true,
-  Padding: true,
-  ResultSizeDefault: 20000,
-  ResultSizeMaximum: 20000,
-  Signature: true,
-  TextDirectionLayout: true,
-  Treeview: true,
-  UploadToFileShare: true
-}
+@PDF.Features.DocumentDescriptionReference : '../../../../default/iwbep/common/0001/$metadata'
+@PDF.Features.DocumentDescriptionCollection : 'MyDocumentDescriptions'
+@PDF.Features.ArchiveFormat : true
+@PDF.Features.Border : true
+@PDF.Features.CoverPage : true
+@PDF.Features.FitToPage : true
+@PDF.Features.FontName : true
+@PDF.Features.FontSize : true
+@PDF.Features.HeaderFooter : true
+@PDF.Features.IANATimezoneFormat : true
+@PDF.Features.Margin : true
+@PDF.Features.Padding : true
+@PDF.Features.ResultSizeDefault : 20000
+@PDF.Features.ResultSizeMaximum : 20000
+@PDF.Features.Signature : true
+@PDF.Features.TextDirectionLayout : true
+@PDF.Features.Treeview : true
+@PDF.Features.UploadToFileShare : true
 @Capabilities.KeyAsSegmentSupported : true
 @Capabilities.AsynchronousRequestsSupported : true
-service CE_FREIGHTORDER_0001 {};
+service FREIGHTORDER_0001 {};
 
 @cds.external : true
 @cds.persistence.skip : true
@@ -108,8 +110,7 @@ service CE_FREIGHTORDER_0001 {};
   }
 ]
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
-@Capabilities.DeleteRestrictions.Deletable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [
   '_CarrierAddrDfltRprstn',
   '_ConsigneeAddrDfltRprstn',
@@ -124,8 +125,11 @@ service CE_FREIGHTORDER_0001 {};
   '_ShipperAddrDfltRprstn'
 ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.DeleteRestrictions.Deletable : false
 @Core.OptimisticConcurrency : [ 'ChangedDateTime' ]
-entity CE_FREIGHTORDER_0001.FreightOrder {
+entity FREIGHTORDER_0001.FreightOrder {
   @Core.Computed : true
   @Common.Label : 'Transportation Order UUID'
   key TransportationOrderUUID : UUID not null;
@@ -330,25 +334,25 @@ entity CE_FREIGHTORDER_0001.FreightOrder {
   @Common.Label : 'Transportation Order Changed Date Time'
   @Common.QuickInfo : 'Transportation Order Changed Date and Time'
   ChangedDateTime : DateTime;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _CarrierAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
-  _ConsigneeAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
-  _ExectgCarrierAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _CarrierAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
+  _ConsigneeAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
+  _ExectgCarrierAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
   @Common.Composition : true
-  _FreightOrderBusinessPartner : Composition of many CE_FREIGHTORDER_0001.FreightOrderBusinessPartner {  };
+  _FreightOrderBusinessPartner : Composition of many FREIGHTORDER_0001.FreightOrderBusinessPartner {  };
   @Common.Composition : true
-  _FreightOrderCharge : Composition of one CE_FREIGHTORDER_0001.FreightOrderCharge {  };
+  _FreightOrderCharge : Composition of one FREIGHTORDER_0001.FreightOrderCharge {  };
   @Common.Composition : true
-  _FreightOrderDocumentReference : Composition of many CE_FREIGHTORDER_0001.FreightOrderDocumentReference {  };
+  _FreightOrderDocumentReference : Composition of many FREIGHTORDER_0001.FreightOrderDocumentReference {  };
   @Common.Composition : true
-  _FreightOrderEvent : Composition of many CE_FREIGHTORDER_0001.FreightOrderEvent {  };
+  _FreightOrderEvent : Composition of many FREIGHTORDER_0001.FreightOrderEvent {  };
   @Common.Composition : true
-  _FreightOrderItem : Composition of many CE_FREIGHTORDER_0001.FreightOrderItem {  };
+  _FreightOrderItem : Composition of many FREIGHTORDER_0001.FreightOrderItem {  };
   @Common.Composition : true
-  _FreightOrderStop : Composition of many CE_FREIGHTORDER_0001.FreightOrderStop {  };
+  _FreightOrderStop : Composition of many FREIGHTORDER_0001.FreightOrderStop {  };
   @Common.Composition : true
-  _FrtOrdMainBPAddrDfltRprstn : Composition of many CE_FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
-  _ShipperAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
+  _FrtOrdMainBPAddrDfltRprstn : Composition of many FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
+  _ShipperAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
 } actions {
   action CreateFreightOrder(
     _it : many $self not null,
@@ -362,7 +366,7 @@ entity CE_FREIGHTORDER_0001.FreightOrder {
     @Common.IsUpperCase : true
     @Common.Label : 'Document'
     TransportationOrder : String(20) not null default null
-  ) returns CE_FREIGHTORDER_0001.FreightOrder not null;
+  ) returns FREIGHTORDER_0001.FreightOrder not null;
   action CreateForDelivery(
     _it : many $self not null,
     @Common.FieldControl : #Mandatory
@@ -372,16 +376,22 @@ entity CE_FREIGHTORDER_0001.FreightOrder {
     @Common.QuickInfo : 'Business Document Type'
     @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FTOR_TYPE'
     TransportationOrderType : String(4) not null,
-    _FreightBookingItems : many CE_FREIGHTORDER_0001.D_FreightOrdCrteForDelivItmP not null
-  ) returns many CE_FREIGHTORDER_0001.FreightOrder not null;
+    _FreightBookingItems : many FREIGHTORDER_0001.D_FreightOrdCrteForDelivItmP not null
+  ) returns many FREIGHTORDER_0001.FreightOrder not null;
   action UnassignFreightUnit(
     _it : $self not null,
-    _FreightUnits : many CE_FREIGHTORDER_0001.D_FreightUnitUnassignParameter not null
+    _FreightUnits : many FREIGHTORDER_0001.D_FreightUnitUnassignParameter not null
   );
   action CalculateTransportationCharges(
     _it : $self not null
   );
+  action SetToNotReadyForTranspExec(
+    _it : $self not null
+  );
   action CancelFreightOrder(
+    _it : $self not null
+  );
+  action SetToReadyForTranspExecution(
     _it : $self not null
   );
   action CreateForPickup(
@@ -393,16 +403,15 @@ entity CE_FREIGHTORDER_0001.FreightOrder {
     @Common.QuickInfo : 'Business Document Type'
     @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FTOR_TYPE'
     TransportationOrderType : String(4) not null,
-    _FreightBookingItems : many CE_FREIGHTORDER_0001.D_FreightOrderCrteForPkupItmP not null
-  ) returns many CE_FREIGHTORDER_0001.FreightOrder not null;
+    _FreightBookingItems : many FREIGHTORDER_0001.D_FreightOrderCrteForPkupItmP not null
+  ) returns many FREIGHTORDER_0001.FreightOrder not null;
   action AssignFreightUnit(
     _it : $self not null,
-    @Common.IsUpperCase : true
     @Common.Label : 'UUID of TO Item'
     @Common.Heading : 'UUID of Transportation Order Item with Conversion Exit'
     @Common.QuickInfo : 'UUID of Transportation Order Item with Conversion Exit'
-    TransportationOrderItemUUID : UUID,
-    _FreightUnits : many CE_FREIGHTORDER_0001.D_FreightUnitAssignParameter not null
+    TransportationOrderItemUUID : UUID default null,
+    _FreightUnits : many FREIGHTORDER_0001.D_FreightUnitAssignParameter not null
   );
   action ReportEvent(
     _it : $self not null,
@@ -412,24 +421,21 @@ entity CE_FREIGHTORDER_0001.FreightOrder {
     @Common.QuickInfo : 'Event Occurring for a Transportation Activity'
     @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FTOR_EVENT'
     TranspOrdEventCode : String(20) not null,
-    @Common.FieldControl : #Mandatory
-    @Common.IsUpperCase : true
     @Common.Label : 'UUID of TO Stop'
     @Common.Heading : 'UUID of Stop of Transport. Order with Conversion Exit'
     @Common.QuickInfo : 'UUID of Stop of Transportation Order with Conversion Exit'
-    TransportationOrderStopUUID : UUID,
+    TransportationOrderStopUUID : UUID default null,
     @odata.Precision : 0
     @odata.Type : 'Edm.DateTimeOffset'
-    @Common.IsUpperCase : true
     @Common.Label : 'Event Actual Date Time'
     @Common.QuickInfo : 'Transportation Order Event Actual Date Time'
     TranspOrdEvtActualDateTime : DateTime default null,
     @odata.Precision : 0
     @odata.Type : 'Edm.DateTimeOffset'
-    @Common.IsUpperCase : true
     @Common.Label : 'Event Estimated Date Time'
     @Common.QuickInfo : 'Transportation Order Event Estimated Date Time'
-    TranspOrdEvtEstimatedDateTime : DateTime default null
+    TranspOrdEvtEstimatedDateTime : DateTime default null,
+    _TransportationOrderItems : many FREIGHTORDER_0001.D_TranspOrdReportEventItemP not null
   );
 };
 
@@ -438,11 +444,13 @@ entity CE_FREIGHTORDER_0001.FreightOrder {
 @Common.Label : 'Freight Order Business Partner'
 @Common.Messages : SAP__Messages
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdBPAddrDfltRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
-entity CE_FREIGHTORDER_0001.FreightOrderBusinessPartner {
+entity FREIGHTORDER_0001.FreightOrderBusinessPartner {
   @Core.Computed : true
   @Common.Label : 'Transp. Order Business Partner UUID'
   @Common.QuickInfo : 'Transportation Order Business Partner UUID'
@@ -469,10 +477,10 @@ entity CE_FREIGHTORDER_0001.FreightOrderBusinessPartner {
   @Common.Label : 'Address ID'
   @Common.QuickInfo : 'Unique Identifier for Address (APC_V_ADDRESS_ID)'
   TranspOrdBizPartnerAddressID : String(40) not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
   @Common.Composition : true
-  _FrtOrdBPAddrDfltRprstn : Composition of one CE_FREIGHTORDER_0001.FrtOrdBPAddrDfltRprstn {  };
+  _FrtOrdBPAddrDfltRprstn : Composition of one FREIGHTORDER_0001.FrtOrdBPAddrDfltRprstn {  };
 };
 
 @cds.external : true
@@ -494,13 +502,13 @@ entity CE_FREIGHTORDER_0001.FreightOrderBusinessPartner {
     AllowedExpressions: 'MultiValue'
   }
 ]
-entity CE_FREIGHTORDER_0001.FreightOrderCharge {
+entity FREIGHTORDER_0001.FreightOrderCharge {
   @Core.Computed : true
-  @Common.Label : 'Charge UUID'
+  @Common.Label : 'Transportation Charge Unique ID'
   @Common.QuickInfo : 'Transportation Charge UUID'
   key TransportationChargesObjUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Host Document UUID'
   TransportationOrderUUID : UUID not null;
   @Common.IsUpperCase : true
   @Common.Label : 'Posting Status'
@@ -537,9 +545,9 @@ entity CE_FREIGHTORDER_0001.FreightOrderCharge {
   @Common.Heading : 'Exchange Date for Document Currency Conversion'
   @Common.QuickInfo : 'Exchange Rate Date for Document Currency Conversion'
   ExchangeRateDate : Date;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
   @Common.Composition : true
-  _FreightOrderChargeItem : Composition of many CE_FREIGHTORDER_0001.FreightOrderChargeItem {  };
+  _FreightOrderChargeItem : Composition of many FREIGHTORDER_0001.FreightOrderChargeItem {  };
 };
 
 @cds.external : true
@@ -553,15 +561,12 @@ entity CE_FREIGHTORDER_0001.FreightOrderCharge {
   }
 ]
 @Capabilities.SearchRestrictions.Searchable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
+@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderCharge', '_FrtOrdChrgElement', '_FrtOrdChrgItmExchRate' ]
+@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
 @Capabilities.InsertRestrictions.Insertable : false
 @Capabilities.DeleteRestrictions.Deletable : false
-@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [
-  '_FreightOrder',
-  '_FreightOrderCharge',
-  '_FrtOrdChrgElement',
-  '_FrtOrdChrgItmExchRate'
-]
-@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
 @Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
   {
@@ -573,23 +578,25 @@ entity CE_FREIGHTORDER_0001.FreightOrderCharge {
     AllowedExpressions: 'MultiValue'
   }
 ]
-entity CE_FREIGHTORDER_0001.FreightOrderChargeItem {
+entity FREIGHTORDER_0001.FreightOrderChargeItem {
   @Core.Computed : true
   @Common.Label : 'Charge Item UUID'
   @Common.QuickInfo : 'Transportation Charge Item UUID'
   key TranspChargeItemUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Unique ID'
+  @Common.QuickInfo : 'Transportation Charge UUID'
   TransportationChargesObjUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Host Document UUID'
   TransportationOrderUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Charge Calculation Level Reference UUID'
+  @Common.QuickInfo : 'Transportation Charge Calculation Level Reference UUID'
   TranspChargeCalcLevelRefUUID : UUID;
   @Core.Computed : true
-  @Common.Label : 'UUID Internal'
-  @Common.QuickInfo : 'Internal Universally Unique Identifier'
+  @Common.Label : 'Transportation Agreement UUID'
+  @Common.QuickInfo : 'TTransportation Agreement UUID'
   TransportationAgreementUUID : UUID;
   @Core.Computed : true
   @Common.Label : 'BP GUID'
@@ -609,7 +616,8 @@ entity CE_FREIGHTORDER_0001.FreightOrderChargeItem {
   @Common.IsCurrency : true
   @Core.Computed : true
   @Common.IsUpperCase : true
-  @Common.Label : 'Currency'
+  @Common.Label : 'Document Currency'
+  @Common.QuickInfo : 'Transportation Charge Document Currency'
   TranspChrgItemDocCurrency : String(3) not null;
   @Core.Computed : true
   @Measures.ISOCurrency : TranspChrgItemDocCurrency
@@ -618,7 +626,8 @@ entity CE_FREIGHTORDER_0001.FreightOrderChargeItem {
   @Common.IsCurrency : true
   @Core.Computed : true
   @Common.IsUpperCase : true
-  @Common.Label : 'Currency'
+  @Common.Label : 'Local Currency'
+  @Common.QuickInfo : 'Transportation Charge Local Currency'
   TranspChrgItemLoclCurrency : String(3) not null;
   @Core.Computed : true
   @Measures.ISOCurrency : TranspChrgItemLoclCurrency
@@ -652,13 +661,13 @@ entity CE_FREIGHTORDER_0001.FreightOrderChargeItem {
   @Common.QuickInfo : 'Key for Terms of Payment'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=DZTERM'
   PaymentTerms : String(4) not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderCharge : Association to one CE_FREIGHTORDER_0001.FreightOrderCharge {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderCharge : Association to one FREIGHTORDER_0001.FreightOrderCharge {  };
   @Common.Composition : true
-  _FrtOrdChrgElement : Composition of many CE_FREIGHTORDER_0001.FrtOrdChrgElement {  };
+  _FrtOrdChrgElement : Composition of many FREIGHTORDER_0001.FrtOrdChrgElement {  };
   @Common.Composition : true
-  _FrtOrdChrgItmExchRate : Composition of many CE_FREIGHTORDER_0001.FrtOrdChrgItmExchRate {  };
+  _FrtOrdChrgItmExchRate : Composition of many FREIGHTORDER_0001.FrtOrdChrgItmExchRate {  };
 };
 
 @cds.external : true
@@ -666,11 +675,13 @@ entity CE_FREIGHTORDER_0001.FreightOrderChargeItem {
 @Common.Label : 'Freight Order Document Reference'
 @Common.Messages : SAP__Messages
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
-entity CE_FREIGHTORDER_0001.FreightOrderDocumentReference {
+entity FREIGHTORDER_0001.FreightOrderDocumentReference {
   @Core.Computed : true
   @Common.Label : 'Transp. Order Document Reference UUID'
   key TransportationOrderDocRefUUID : UUID not null;
@@ -706,8 +717,8 @@ entity CE_FREIGHTORDER_0001.FreightOrderDocumentReference {
   @Common.Heading : 'Issuing Party of Bus. Trans. Document'
   @Common.QuickInfo : 'Issuing Party of Business Transaction Document'
   TranspOrdDocRefIssuerName : String(40) not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
 };
 
 @cds.external : true
@@ -719,7 +730,7 @@ entity CE_FREIGHTORDER_0001.FreightOrderDocumentReference {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-entity CE_FREIGHTORDER_0001.FreightOrderEvent {
+entity FREIGHTORDER_0001.FreightOrderEvent {
   @Core.Computed : true
   @Common.Label : 'Transportation Order Event UUID'
   key TransportationOrderEventUUID : UUID not null;
@@ -763,6 +774,10 @@ entity CE_FREIGHTORDER_0001.FreightOrderEvent {
   @Common.QuickInfo : 'Transportation Order Stop UUID'
   TransportationOrderStopUUID : UUID;
   @Core.Computed : true
+  @Common.Label : 'Item UUID'
+  @Common.QuickInfo : 'Transportation Order Item UUID'
+  TransportationOrderItemUUID : UUID;
+  @Core.Computed : true
   @Common.IsUpperCase : true
   @Common.Label : 'Created By'
   @Common.QuickInfo : 'Created By User'
@@ -784,7 +799,7 @@ entity CE_FREIGHTORDER_0001.FreightOrderEvent {
   @Common.Label : 'Transportation Order Changed Date Time'
   @Common.QuickInfo : 'Transportation Order Changed Date and Time'
   ChangedDateTime : DateTime;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
 };
 
 @cds.external : true
@@ -804,9 +819,21 @@ entity CE_FREIGHTORDER_0001.FreightOrderEvent {
 @Capabilities.SearchRestrictions.Searchable : false
 @Capabilities.InsertRestrictions.RequiredProperties : [ 'TranspOrdItemType', 'TranspOrdItemParentItemUUID' ]
 @Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
+@Capabilities.UpdateRestrictions.NonUpdatableProperties : [
+  'TranspOrdItemType',
+  'TranspOrdItemParentItemUUID',
+  'SourceStopUUID',
+  'DestinationStopUUID',
+  'TranspBaseDocument',
+  'TranspBaseDocumentType',
+  'TranspBaseDocumentItem',
+  'TranspBaseDocumentItemType'
+]
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [
   '_ConsigneeAddrDfltRprstn',
   '_FreightOrder',
+  '_FreightOrderItemBatch',
   '_FreightOrderItemCommodityCode',
   '_FreightOrderItemDocRef',
   '_FreightOrderItemSeal',
@@ -814,21 +841,55 @@ entity CE_FREIGHTORDER_0001.FreightOrderEvent {
   '_ShipperAddrDfltRprstn'
 ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
 @Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
-  { Property: TranspEquipCapacityLength, AllowedExpressions: 'MultiValue' },
-  { Property: TranspEquipCapacityWidth, AllowedExpressions: 'MultiValue' },
-  { Property: TranspEquipCapacityHeight, AllowedExpressions: 'MultiValue' },
-  { Property: TranspEquipCapacityWeight, AllowedExpressions: 'MultiValue' },
-  { Property: TranspEquipCapacityVolume, AllowedExpressions: 'MultiValue' },
-  { Property: TranspOrdItmMinTemp, AllowedExpressions: 'MultiValue' },
-  { Property: TranspOrdItmMaxTemp, AllowedExpressions: 'MultiValue' },
-  { Property: TranspOrdItemQuantity, AllowedExpressions: 'MultiValue' },
-  { Property: TranspOrdItemGrossWeight, AllowedExpressions: 'MultiValue' },
-  { Property: TranspOrdItemGrossVolume, AllowedExpressions: 'MultiValue' },
-  { Property: TranspOrdItemNetWeight, AllowedExpressions: 'MultiValue' }
+  {
+    Property: TranspEquipCapacityLength,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspEquipCapacityWidth,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspEquipCapacityHeight,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspEquipCapacityWeight,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspEquipCapacityVolume,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspOrdItmMinTemp,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspOrdItmMaxTemp,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspOrdItemQuantity,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspOrdItemGrossWeight,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspOrdItemGrossVolume,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspOrdItemNetWeight,
+    AllowedExpressions: 'MultiValue'
+  }
 ]
-entity CE_FREIGHTORDER_0001.FreightOrderItem {
+entity FREIGHTORDER_0001.FreightOrderItem {
   @Core.Computed : true
   @Common.Label : 'Item UUID'
   @Common.QuickInfo : 'Transportation Order Item UUID'
@@ -855,7 +916,7 @@ entity CE_FREIGHTORDER_0001.FreightOrderItem {
   @Core.Immutable : true
   @Common.Label : 'Parent Item UUID'
   @Common.QuickInfo : 'Transportation Order Parent Item UUID'
-  TranspOrdItemParentItemUUID : UUID not null;
+  TranspOrdItemParentItemUUID : UUID;
   @Common.Label : 'Item Description'
   TranspOrdItemDesc : String(40) not null;
   @Core.Computed : true
@@ -1078,18 +1139,67 @@ entity CE_FREIGHTORDER_0001.FreightOrderItem {
   @Common.Label : 'Item Dangerous Goods Status'
   @Common.QuickInfo : 'Transportation Order Item Dangerous Goods Status'
   TranspOrdItemDngrsGdsSts : String(1) not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _ConsigneeAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {  };
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _ConsigneeAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
   @Common.Composition : true
-  _FreightOrderItemCommodityCode : Composition of many CE_FREIGHTORDER_0001.FreightOrderItemCommodityCode {  };
+  _FreightOrderItemBatch : Composition of many FREIGHTORDER_0001.FreightOrderItemBatch {  };
   @Common.Composition : true
-  _FreightOrderItemDocRef : Composition of many CE_FREIGHTORDER_0001.FreightOrderItemDocRef {  };
+  _FreightOrderItemCommodityCode : Composition of many FREIGHTORDER_0001.FreightOrderItemCommodityCode {  };
   @Common.Composition : true
-  _FreightOrderItemSeal : Composition of many CE_FREIGHTORDER_0001.FreightOrderItemSeal {  };
+  _FreightOrderItemDocRef : Composition of many FREIGHTORDER_0001.FreightOrderItemDocRef {  };
   @Common.Composition : true
-  _FrtOrdItmMainBPAddrDfltRprstn : Composition of many CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {  };
-  _ShipperAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {  };
+  _FreightOrderItemSeal : Composition of many FREIGHTORDER_0001.FreightOrderItemSeal {  };
+  @Common.Composition : true
+  _FrtOrdItmMainBPAddrDfltRprstn : Composition of many FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {  };
+  _ShipperAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {  };
+};
+
+@cds.external : true
+@cds.persistence.skip : true
+@Common.Label : 'Freight Order Item Batch'
+@Capabilities.SearchRestrictions.Searchable : false
+@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.DeleteRestrictions.Deletable : false
+@Capabilities.UpdateRestrictions.Updatable : false
+@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderItem' ]
+@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+entity FREIGHTORDER_0001.FreightOrderItemBatch {
+  @Core.Computed : true
+  @Common.Label : 'Item Batch UUID'
+  @Common.QuickInfo : 'Transportation Order Item Batch UUID'
+  key TranspOrdItemBatchUUID : UUID not null;
+  @Core.Computed : true
+  @Common.Label : 'Item UUID'
+  @Common.QuickInfo : 'Transportation Order Item UUID'
+  TransportationOrderItemUUID : UUID not null;
+  @Core.Computed : true
+  @Common.Label : 'Transportation Order UUID'
+  TransportationOrderUUID : UUID not null;
+  @Common.IsUpperCase : true
+  @Common.Label : 'Batch'
+  @Common.QuickInfo : 'Batch Number'
+  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=CHARG_D'
+  Batch : String(10) not null;
+  @Common.IsUpperCase : true
+  @Common.Label : 'Product'
+  @Common.QuickInfo : 'Product Number'
+  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=PRODUCTNUMBER'
+  ProductID : String(18) not null;
+  @Common.IsUpperCase : true
+  @Common.Label : 'Supplier Batch'
+  @Common.QuickInfo : 'Supplier Batch Number'
+  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=LICHN'
+  BatchBySupplier : String(15) not null;
+  @Common.Label : 'Date of Manufacture'
+  @Common.Heading : 'Manuf. Dte'
+  ManufactureDate : Date;
+  @Common.Label : 'SLED/BBD'
+  @Common.QuickInfo : 'Shelf Life Expiration or Best-Before Date'
+  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=VFDAT'
+  ShelfLifeExpirationDate : Date;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderItem : Association to one FREIGHTORDER_0001.FreightOrderItem {  };
 };
 
 @cds.external : true
@@ -1101,7 +1211,7 @@ entity CE_FREIGHTORDER_0001.FreightOrderItem {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderItem' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-entity CE_FREIGHTORDER_0001.FreightOrderItemCommodityCode {
+entity FREIGHTORDER_0001.FreightOrderItemCommodityCode {
   @Core.Computed : true
   @Common.Label : 'Item Commodity Code UUID'
   @Common.QuickInfo : 'Transportation Order Item Commodity Code UUID'
@@ -1125,8 +1235,8 @@ entity CE_FREIGHTORDER_0001.FreightOrderItemCommodityCode {
   @Common.QuickInfo : 'Numbering Scheme for Commodity Codes for Transportation'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FSTCTS'
   TrOrdItmCmmdtyCodeNmbrngSchm : String(10) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderItem : Association to one CE_FREIGHTORDER_0001.FreightOrderItem {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderItem : Association to one FREIGHTORDER_0001.FreightOrderItem {  };
 };
 
 @cds.external : true
@@ -1134,11 +1244,13 @@ entity CE_FREIGHTORDER_0001.FreightOrderItemCommodityCode {
 @Common.Label : 'Freight Order Item Document Reference'
 @Common.Messages : SAP__Messages
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderItem' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
-entity CE_FREIGHTORDER_0001.FreightOrderItemDocRef {
+entity FREIGHTORDER_0001.FreightOrderItemDocRef {
   @Core.Computed : true
   @Common.Label : 'Item Document Reference UUID'
   @Common.QuickInfo : 'Transportation Order Item Document Reference UUID'
@@ -1180,9 +1292,9 @@ entity CE_FREIGHTORDER_0001.FreightOrderItemDocRef {
   @Common.Heading : 'Issuing Party of Bus. Trans. Document'
   @Common.QuickInfo : 'Issuing Party of Business Transaction Document'
   TranspOrdItemDocRefIssuerName : String(40) not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderItem : Association to one CE_FREIGHTORDER_0001.FreightOrderItem {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderItem : Association to one FREIGHTORDER_0001.FreightOrderItem {  };
 };
 
 @cds.external : true
@@ -1190,11 +1302,13 @@ entity CE_FREIGHTORDER_0001.FreightOrderItemDocRef {
 @Common.Label : 'Freight Order Item Seal'
 @Common.Messages : SAP__Messages
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderItem' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
-entity CE_FREIGHTORDER_0001.FreightOrderItemSeal {
+entity FREIGHTORDER_0001.FreightOrderItemSeal {
   @Core.Computed : true
   @Common.Label : 'Item Seal UUID'
   @Common.QuickInfo : 'Transportation Order Item Seal UUID'
@@ -1213,9 +1327,9 @@ entity CE_FREIGHTORDER_0001.FreightOrderItemSeal {
   @Common.Label : 'Sealing Date/Time'
   @Common.QuickInfo : 'Transportation Order Item Sealing Date/Time'
   TranspOrdItemSealingDateTime : DateTime;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderItem : Association to one CE_FREIGHTORDER_0001.FreightOrderItem {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderItem : Association to one FREIGHTORDER_0001.FreightOrderItem {  };
 };
 
 @cds.external : true
@@ -1223,8 +1337,7 @@ entity CE_FREIGHTORDER_0001.FreightOrderItemSeal {
 @Common.Label : 'Freight Order Stage'
 @Common.Messages : SAP__Messages
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
-@Capabilities.DeleteRestrictions.Deletable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [
   '_ExectgCarrierAddrDfltRprstn',
   '_FreightOrder',
@@ -1233,11 +1346,17 @@ entity CE_FREIGHTORDER_0001.FreightOrderItemSeal {
   '_InvcgCarrierAddrDfltRprstn'
 ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.DeleteRestrictions.Deletable : false
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
 @Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
-  { Property: TranspOrdStageDistance, AllowedExpressions: 'MultiValue' }
+  {
+    Property: TranspOrdStageDistance,
+    AllowedExpressions: 'MultiValue'
+  }
 ]
-entity CE_FREIGHTORDER_0001.FreightOrderStage {
+entity FREIGHTORDER_0001.FreightOrderStage {
   @Core.Computed : true
   @Common.Label : 'Stage UUID'
   @Common.QuickInfo : 'Transportation Order Stage UUID'
@@ -1325,13 +1444,13 @@ entity CE_FREIGHTORDER_0001.FreightOrderStage {
   @Common.Label : 'Stage Destination Stop UUID'
   @Common.QuickInfo : 'Transportation Order Stage Destination Stop UUID'
   TranspOrdStageDestStopUUID : UUID;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _ExectgCarrierAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {  };
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderStop : Association to one CE_FREIGHTORDER_0001.FreightOrderStop {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _ExectgCarrierAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderStop : Association to one FREIGHTORDER_0001.FreightOrderStop {  };
   @Common.Composition : true
-  _FrtOrdStageBPAddrDfltRprstn : Composition of many CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {  };
-  _InvcgCarrierAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {  };
+  _FrtOrdStageBPAddrDfltRprstn : Composition of many FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {  };
+  _InvcgCarrierAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {  };
 };
 
 @cds.external : true
@@ -1339,12 +1458,14 @@ entity CE_FREIGHTORDER_0001.FreightOrderStage {
 @Common.Label : 'Freight Order Stop'
 @Common.Messages : SAP__Messages
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
-@Capabilities.DeleteRestrictions.Deletable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderStage', '_FrtOrdStopLocAddrDfltRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.DeleteRestrictions.Deletable : false
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
-entity CE_FREIGHTORDER_0001.FreightOrderStop {
+entity FREIGHTORDER_0001.FreightOrderStop {
   @Core.Computed : true
   @Common.Label : 'Stop UUID'
   @Common.QuickInfo : 'Transportation Order Stop UUID'
@@ -1428,12 +1549,12 @@ entity CE_FREIGHTORDER_0001.FreightOrderStop {
   @Common.Label : 'Execution Block'
   @Common.QuickInfo : 'Transportation Order Execution Block'
   TranspOrdStopExecIsBlocked : Boolean not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
   @Common.Composition : true
-  _FreightOrderStage : Composition of many CE_FREIGHTORDER_0001.FreightOrderStage {  };
+  _FreightOrderStage : Composition of many FREIGHTORDER_0001.FreightOrderStage {  };
   @Common.Composition : true
-  _FrtOrdStopLocAddrDfltRprstn : Composition of one CE_FREIGHTORDER_0001.FrtOrdStopLocAddrDfltRprstn {  };
+  _FrtOrdStopLocAddrDfltRprstn : Composition of one FREIGHTORDER_0001.FrtOrdStopLocAddrDfltRprstn {  };
 };
 
 @cds.external : true
@@ -1445,7 +1566,7 @@ entity CE_FREIGHTORDER_0001.FreightOrderStop {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdBPAddrDfltRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-entity CE_FREIGHTORDER_0001.FrtOrdBPAddrAddlRprstn {
+entity FREIGHTORDER_0001.FrtOrdBPAddrAddlRprstn {
   @Core.Computed : true
   @Common.Label : 'NodeID'
   key TransportationOrderBusPartUUID : UUID not null;
@@ -1495,8 +1616,8 @@ entity CE_FREIGHTORDER_0001.FrtOrdBPAddrAddlRprstn {
   @Common.QuickInfo : 'Region (State, Province, County)'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=REGIO'
   Region : String(3) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FrtOrdBPAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdBPAddrDfltRprstn {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FrtOrdBPAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdBPAddrDfltRprstn {  };
 };
 
 @cds.external : true
@@ -1506,14 +1627,15 @@ entity CE_FREIGHTORDER_0001.FrtOrdBPAddrAddlRprstn {
 @Capabilities.InsertRestrictions.Insertable : false
 @Capabilities.DeleteRestrictions.Deletable : false
 @Capabilities.UpdateRestrictions.Updatable : false
-@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [
-  '_FreightOrder',
-  '_FreightOrderBusinessPartner',
-  '_FrtOrdBPAddrAddlRprstn'
-]
+@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderBusinessPartner', '_FrtOrdBPAddrAddlRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-@Capabilities.FilterRestrictions.FilterExpressionRestrictions : [ { Property: EmailAddress, AllowedExpressions: 'MultiValue' } ]
-entity CE_FREIGHTORDER_0001.FrtOrdBPAddrDfltRprstn {
+@Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
+  {
+    Property: EmailAddress,
+    AllowedExpressions: 'MultiValue'
+  }
+]
+entity FREIGHTORDER_0001.FrtOrdBPAddrDfltRprstn {
   @Core.Computed : true
   @Common.Label : 'NodeID'
   key TransportationOrderBusPartUUID : UUID not null;
@@ -1574,10 +1696,10 @@ entity CE_FREIGHTORDER_0001.FrtOrdBPAddrDfltRprstn {
   @Common.QuickInfo : 'Complete Number: Dialing Code+Number+Extension'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=AD_FXNRLNG'
   InternationalFaxNumber : String(30) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderBusinessPartner : Association to one CE_FREIGHTORDER_0001.FreightOrderBusinessPartner {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderBusinessPartner : Association to one FREIGHTORDER_0001.FreightOrderBusinessPartner {  };
   @Common.Composition : true
-  _FrtOrdBPAddrAddlRprstn : Composition of many CE_FREIGHTORDER_0001.FrtOrdBPAddrAddlRprstn {  };
+  _FrtOrdBPAddrAddlRprstn : Composition of many FREIGHTORDER_0001.FrtOrdBPAddrAddlRprstn {  };
 };
 
 @cds.external : true
@@ -1585,26 +1707,41 @@ entity CE_FREIGHTORDER_0001.FrtOrdBPAddrDfltRprstn {
 @Common.Label : 'Freight Order Charge Calculation Base'
 @Common.Messages : SAP__Messages
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
-@Capabilities.DeleteRestrictions.Deletable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdChrgElement' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.DeleteRestrictions.Deletable : false
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
 @Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
-  { Property: TranspScaleItemQuantity, AllowedExpressions: 'MultiValue' },
-  { Property: TranspScaleItemAmount, AllowedExpressions: 'MultiValue' },
-  { Property: TranspDataSourceQuantity, AllowedExpressions: 'MultiValue' },
-  { Property: TranspDataSourceAmount, AllowedExpressions: 'MultiValue' }
+  {
+    Property: TranspScaleItemQuantity,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspScaleItemAmount,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspDataSourceQuantity,
+    AllowedExpressions: 'MultiValue'
+  },
+  {
+    Property: TranspDataSourceAmount,
+    AllowedExpressions: 'MultiValue'
+  }
 ]
-entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcBase {
+entity FREIGHTORDER_0001.FrtOrdChrgCalcBase {
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Calculation Base UUID'
+  @Common.QuickInfo : 'Transportation Charge Calculation Base UUID'
   key TranspChrgCalcBaseUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Element UUID'
   TranspChargeItemElementUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Host Document UUID'
   TransportationOrderUUID : UUID not null;
   @Core.Computed : true
   @Common.IsUpperCase : true
@@ -1635,14 +1772,11 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcBase {
   @Common.Label : 'Scale Item Amount'
   TranspScaleItemAmount : Decimal(precision: 31) not null;
   @Core.Computed : true
-  @Common.Label : 'Non-Numeric Calc Qty'
-  @Common.Heading : 'Non-Numeric Calculation Quantity'
-  @Common.QuickInfo : 'Non-Numeric Calculation Quantity'
+  @Common.Label : 'Transp Charge Scale Quantity (Char)'
+  @Common.QuickInfo : 'Transportation Charge Scale Quantity (Character)'
   TranspScaleItemValueChar : String(255) not null;
   @Common.IsUnit : true
-  @Common.Label : 'UoM'
-  @Common.Heading : 'Unit of Measure'
-  @Common.QuickInfo : 'Unit of Measure'
+  @Common.Label : 'Transportation Charge Data Source UOM'
   TranspDataSourceQtyUnit : String(3) not null;
   @Measures.Unit : TranspDataSourceQtyUnit
   @Common.Label : 'Quantity'
@@ -1650,22 +1784,20 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcBase {
   @Common.IsCurrency : true
   @Core.Computed : true
   @Common.IsUpperCase : true
-  @Common.Label : 'Currency (SAP-Internal)'
-  @Common.Heading : 'Curr.'
-  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=CURRENCYSAP'
+  @Common.Label : 'Transp Charge Data Source Currency'
+  @Common.QuickInfo : 'Transportation Charge Data Source Currency'
   TranspDataSourceCurrency : String(3) not null;
   @Core.Computed : true
   @Measures.ISOCurrency : TranspDataSourceCurrency
   @Common.Label : 'Data Source Amount'
   TranspDataSourceAmount : Decimal(precision: 31) not null;
   @Core.Computed : true
-  @Common.Label : 'Non-Numeric Calc Qty'
-  @Common.Heading : 'Non-Numeric Calculation Quantity'
-  @Common.QuickInfo : 'Non-Numeric Calculation Quantity'
+  @Common.Label : 'Transp Chrg Data Source Quantity (Char)'
+  @Common.QuickInfo : 'Transportation Charge Data Source Quantity (Character)'
   TranspDataSourceValueChar : String(255) not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FrtOrdChrgElement : Association to one CE_FREIGHTORDER_0001.FrtOrdChrgElement {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FrtOrdChrgElement : Association to one FREIGHTORDER_0001.FrtOrdChrgElement {  };
 };
 
 @cds.external : true
@@ -1673,9 +1805,12 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcBase {
 @Common.Label : 'Freight Order Charge Calculation Rule'
 @Common.Messages : SAP__Messages
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
+@Capabilities.UpdateRestrictions.NonUpdatableProperties : [ 'TranspChrgCalculationBase' ]
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdChrgElement' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
 @Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
   {
@@ -1687,15 +1822,16 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcBase {
     AllowedExpressions: 'MultiValue'
   }
 ]
-entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcRule {
+entity FREIGHTORDER_0001.FrtOrdChrgCalcRule {
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Calculation Rule UUID'
+  @Common.QuickInfo : 'Transportation Charge Calculation Rule UUID'
   key TranspChrgCalcRuleUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Element UUID'
   TranspChargeItemElementUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Host Document UUID'
   TransportationOrderUUID : UUID not null;
   @Core.Immutable : true
   @Common.IsUpperCase : true
@@ -1715,9 +1851,9 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcRule {
   @Measures.Unit : TranspRateCalcRuleQtyUnit
   @Common.Label : 'Quantity'
   TranspChrgDataSourceQuantity : Decimal(31, 14) not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FrtOrdChrgElement : Association to one CE_FREIGHTORDER_0001.FrtOrdChrgElement {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FrtOrdChrgElement : Association to one FREIGHTORDER_0001.FrtOrdChrgElement {  };
 };
 
 @cds.external : true
@@ -1733,6 +1869,8 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcRule {
 @Capabilities.SearchRestrictions.Searchable : false
 @Capabilities.InsertRestrictions.RequiredProperties : [ 'TranspChargeType' ]
 @Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
+@Capabilities.UpdateRestrictions.NonUpdatableProperties : [ 'TranspChargeType' ]
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [
   '_FreightOrder',
   '_FreightOrderChargeItem',
@@ -1741,6 +1879,7 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcRule {
   '_FrtOrdChrgElmntExchRate'
 ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
 @Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
   {
@@ -1764,15 +1903,16 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgCalcRule {
     AllowedExpressions: 'MultiValue'
   }
 ]
-entity CE_FREIGHTORDER_0001.FrtOrdChrgElement {
+entity FREIGHTORDER_0001.FrtOrdChrgElement {
   @Core.Computed : true
   @Common.Label : 'Transportation Charge Element UUID'
   key TranspChargeItemElementUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Charge Item UUID'
+  @Common.QuickInfo : 'Transportation Charge Item UUID'
   TranspChargeItemUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Host Document UUID'
   TransportationOrderUUID : UUID not null;
   @Core.Computed : true
   @Common.Label : 'Rate UUID Internal'
@@ -1843,22 +1983,17 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgElement {
   TranspRateAmtIsManuallyChanged : Boolean not null;
   @Core.Computed : true
   @Common.IsDigitSequence : true
-  @Common.Label : 'Ref.-From Line No.'
-  @Common.Heading : 'Reference-From Line Number'
-  @Common.QuickInfo : 'Reference-From Line Number'
-  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FTCC_FROM_LINE_NO'
+  @Common.Label : 'Line Number'
+  @Common.Heading : 'Transportation Charge Element Line No.'
+  @Common.QuickInfo : 'Transportation Charge Element Line No.'
   TranspChrgLineNumber : String(6) not null;
   @Common.IsDigitSequence : true
-  @Common.Label : 'Ref.-From Line No.'
-  @Common.Heading : 'Reference-From Line Number'
-  @Common.QuickInfo : 'Reference-From Line Number'
-  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FTCC_FROM_LINE_NO'
+  @Common.Label : 'Transp Charge Elmnt Reference From Item'
+  @Common.QuickInfo : 'Transportation Charge Element Reference From Item'
   TranspChrgRefFromLineNumber : String(6) not null;
   @Common.IsDigitSequence : true
-  @Common.Label : 'Ref.-To Line No.'
-  @Common.Heading : 'Reference-To Line Number'
-  @Common.QuickInfo : 'Reference-To Line Number'
-  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FTCC_TO_LINE_NO'
+  @Common.Label : 'Transp Charge Element Reference To Item'
+  @Common.QuickInfo : 'Transportation Charge Element Reference To Item'
   TranspChrgRefToLineNumber : String(6) not null;
   @Common.IsCurrency : true
   @Core.Computed : true
@@ -1926,15 +2061,15 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgElement {
   @Common.Label : 'Invoicing Status'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FINVOICING_STATUS_CODE'
   TranspChargePostingStatus : String(2) not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderChargeItem : Association to one CE_FREIGHTORDER_0001.FreightOrderChargeItem {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderChargeItem : Association to one FREIGHTORDER_0001.FreightOrderChargeItem {  };
   @Common.Composition : true
-  _FrtOrdChrgCalcBase : Composition of many CE_FREIGHTORDER_0001.FrtOrdChrgCalcBase {  };
+  _FrtOrdChrgCalcBase : Composition of many FREIGHTORDER_0001.FrtOrdChrgCalcBase {  };
   @Common.Composition : true
-  _FrtOrdChrgCalcRule : Composition of many CE_FREIGHTORDER_0001.FrtOrdChrgCalcRule {  };
+  _FrtOrdChrgCalcRule : Composition of many FREIGHTORDER_0001.FrtOrdChrgCalcRule {  };
   @Common.Composition : true
-  _FrtOrdChrgElmntExchRate : Composition of many CE_FREIGHTORDER_0001.FrtOrdChrgElmntExchRate {  };
+  _FrtOrdChrgElmntExchRate : Composition of many FREIGHTORDER_0001.FrtOrdChrgElmntExchRate {  };
 };
 
 @cds.external : true
@@ -1942,34 +2077,37 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgElement {
 @Common.Label : 'Freight Order Charge Element Exch. Rate'
 @Common.Messages : SAP__Messages
 @Capabilities.SearchRestrictions.Searchable : false
-@Capabilities.InsertRestrictions.Insertable : false
-@Capabilities.DeleteRestrictions.Deletable : false
+@Capabilities.UpdateRestrictions.DeltaUpdateSupported : true
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdChrgElement' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
+@Capabilities.DeepUpdateSupport.ContentIDSupported : true
+@Capabilities.InsertRestrictions.Insertable : false
+@Capabilities.DeleteRestrictions.Deletable : false
 @Core.OptimisticConcurrency : [ '_FreightOrder/ChangedDateTime' ]
-entity CE_FREIGHTORDER_0001.FrtOrdChrgElmntExchRate {
+entity FREIGHTORDER_0001.FrtOrdChrgElmntExchRate {
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Exchange Rate UUID'
+  @Common.QuickInfo : 'Transportation Charge Exchange Rate UUID'
   key TranspChrgExchangeRateUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Element UUID'
   TranspChargeItemElementUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Host Document UUID'
   TransportationOrderUUID : UUID not null;
   @Common.IsCurrency : true
   @Core.Computed : true
   @Common.IsUpperCase : true
-  @Common.Label : 'Currency (SAP-Internal)'
-  @Common.Heading : 'Curr.'
-  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=CURRENCYSAP'
+  @Common.Label : 'From currency'
+  @Common.Heading : 'From'
+  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=FCURR_CURR'
   SourceCurrency : String(3) not null;
   @Common.IsCurrency : true
   @Core.Computed : true
   @Common.IsUpperCase : true
-  @Common.Label : 'Currency (SAP-Internal)'
-  @Common.Heading : 'Curr.'
-  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=CURRENCYSAP'
+  @Common.Label : 'To-currency'
+  @Common.Heading : 'To'
+  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=TCURR_CURR'
   TargetCurrency : String(3) not null;
   @Common.Label : 'Exchange Rate'
   TranspChrgExchangeRate : Decimal(28, 14) not null;
@@ -1989,11 +2127,12 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgElmntExchRate {
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=%2FSCMTMS%2FEXCHRATE_DATE_FIXATION'
   TranspExchRateDateIsMnllyChgd : Boolean not null;
   @Core.Computed : true
-  @Common.Label : 'Boolean Variable (X = True, - = False, Space = Unknown)'
+  @Common.Label : 'Exchange Rate Is Manually Changed'
+  @Common.QuickInfo : 'Transportation Exchange Rate Is Manually Changed'
   TranspExchRateIsManuallyChgd : Boolean not null;
-  SAP__Messages : many CE_FREIGHTORDER_0001.SAP__Message not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FrtOrdChrgElement : Association to one CE_FREIGHTORDER_0001.FrtOrdChrgElement {  };
+  SAP__Messages : many FREIGHTORDER_0001.SAP__Message not null;
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FrtOrdChrgElement : Association to one FREIGHTORDER_0001.FrtOrdChrgElement {  };
 };
 
 @cds.external : true
@@ -2005,27 +2144,29 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgElmntExchRate {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderChargeItem' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-entity CE_FREIGHTORDER_0001.FrtOrdChrgItmExchRate {
+entity FREIGHTORDER_0001.FrtOrdChrgItmExchRate {
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Exchange Rate UUID'
+  @Common.QuickInfo : 'Transportation Charge Exchange Rate UUID'
   key TranspChrgExchangeRateUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Charge Item UUID'
+  @Common.QuickInfo : 'Transportation Charge Item UUID'
   TranspChargeItemUUID : UUID not null;
   @Core.Computed : true
-  @Common.Label : 'NodeID'
+  @Common.Label : 'Transportation Charge Host Document UUID'
   TransportationOrderUUID : UUID not null;
   @Common.IsCurrency : true
   @Common.IsUpperCase : true
-  @Common.Label : 'Currency (SAP-Internal)'
-  @Common.Heading : 'Curr.'
-  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=CURRENCYSAP'
+  @Common.Label : 'From currency'
+  @Common.Heading : 'From'
+  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=FCURR_CURR'
   SourceCurrency : String(3) not null;
   @Common.IsCurrency : true
   @Common.IsUpperCase : true
-  @Common.Label : 'Currency (SAP-Internal)'
-  @Common.Heading : 'Curr.'
-  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=CURRENCYSAP'
+  @Common.Label : 'To-currency'
+  @Common.Heading : 'To'
+  @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=TCURR_CURR'
   TargetCurrency : String(3) not null;
   @Common.Label : 'Exchange Rate'
   TranspChrgExchangeRate : Decimal(28, 14) not null;
@@ -2037,8 +2178,8 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgItmExchRate {
   @Common.Heading : 'Exchange Rate Quote Date'
   @Common.QuickInfo : 'Exchange Rate Quote Date'
   ExchangeRateDate : Date;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderChargeItem : Association to one CE_FREIGHTORDER_0001.FreightOrderChargeItem {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderChargeItem : Association to one FREIGHTORDER_0001.FreightOrderChargeItem {  };
 };
 
 @cds.external : true
@@ -2050,7 +2191,7 @@ entity CE_FREIGHTORDER_0001.FrtOrdChrgItmExchRate {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdItmMainBPAddrDfltRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-entity CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrAddlRprstn {
+entity FREIGHTORDER_0001.FrtOrdItmMainBPAddrAddlRprstn {
   @Core.Computed : true
   @Common.Label : 'UUID of TO Item'
   @Common.Heading : 'UUID of Transportation Order Item with Conversion Exit'
@@ -2107,8 +2248,8 @@ entity CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrAddlRprstn {
   @Common.QuickInfo : 'Region (State, Province, County)'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=REGIO'
   Region : String(3) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FrtOrdItmMainBPAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FrtOrdItmMainBPAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {  };
 };
 
 @cds.external : true
@@ -2118,14 +2259,15 @@ entity CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrAddlRprstn {
 @Capabilities.InsertRestrictions.Insertable : false
 @Capabilities.DeleteRestrictions.Deletable : false
 @Capabilities.UpdateRestrictions.Updatable : false
-@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [
-  '_FreightOrder',
-  '_FreightOrderItem',
-  '_FrtOrdItmMainBPAddrAddlRprstn'
-]
+@Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderItem', '_FrtOrdItmMainBPAddrAddlRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-@Capabilities.FilterRestrictions.FilterExpressionRestrictions : [ { Property: EmailAddress, AllowedExpressions: 'MultiValue' } ]
-entity CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {
+@Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
+  {
+    Property: EmailAddress,
+    AllowedExpressions: 'MultiValue'
+  }
+]
+entity FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {
   @Core.Computed : true
   @Common.Label : 'UUID of TO Item'
   @Common.Heading : 'UUID of Transportation Order Item with Conversion Exit'
@@ -2193,10 +2335,10 @@ entity CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {
   @Common.QuickInfo : 'Complete Number: Dialing Code+Number+Extension'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=AD_FXNRLNG'
   InternationalFaxNumber : String(30) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderItem : Association to one CE_FREIGHTORDER_0001.FreightOrderItem {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderItem : Association to one FREIGHTORDER_0001.FreightOrderItem {  };
   @Common.Composition : true
-  _FrtOrdItmMainBPAddrAddlRprstn : Composition of many CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrAddlRprstn {  };
+  _FrtOrdItmMainBPAddrAddlRprstn : Composition of many FREIGHTORDER_0001.FrtOrdItmMainBPAddrAddlRprstn {  };
 };
 
 @cds.external : true
@@ -2208,7 +2350,7 @@ entity CE_FREIGHTORDER_0001.FrtOrdItmMainBPAddrDfltRprstn {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdMainBPAddrDfltRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-entity CE_FREIGHTORDER_0001.FrtOrdMainBPAddrAddlRprstn {
+entity FREIGHTORDER_0001.FrtOrdMainBPAddrAddlRprstn {
   @Core.Computed : true
   @Common.Label : 'Transportation Order UUID'
   key TransportationOrderUUID : UUID not null;
@@ -2260,8 +2402,8 @@ entity CE_FREIGHTORDER_0001.FrtOrdMainBPAddrAddlRprstn {
   @Common.QuickInfo : 'Region (State, Province, County)'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=REGIO'
   Region : String(3) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FrtOrdMainBPAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FrtOrdMainBPAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {  };
 };
 
 @cds.external : true
@@ -2273,8 +2415,13 @@ entity CE_FREIGHTORDER_0001.FrtOrdMainBPAddrAddlRprstn {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdMainBPAddrAddlRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-@Capabilities.FilterRestrictions.FilterExpressionRestrictions : [ { Property: EmailAddress, AllowedExpressions: 'MultiValue' } ]
-entity CE_FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {
+@Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
+  {
+    Property: EmailAddress,
+    AllowedExpressions: 'MultiValue'
+  }
+]
+entity FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {
   @Core.Computed : true
   @Common.Label : 'Transportation Order UUID'
   key TransportationOrderUUID : UUID not null;
@@ -2337,9 +2484,9 @@ entity CE_FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {
   @Common.QuickInfo : 'Complete Number: Dialing Code+Number+Extension'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=AD_FXNRLNG'
   InternationalFaxNumber : String(30) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
   @Common.Composition : true
-  _FrtOrdMainBPAddrAddlRprstn : Composition of many CE_FREIGHTORDER_0001.FrtOrdMainBPAddrAddlRprstn {  };
+  _FrtOrdMainBPAddrAddlRprstn : Composition of many FREIGHTORDER_0001.FrtOrdMainBPAddrAddlRprstn {  };
 };
 
 @cds.external : true
@@ -2351,7 +2498,7 @@ entity CE_FREIGHTORDER_0001.FrtOrdMainBPAddrDfltRprstn {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdStgeBPAddrDfltRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-entity CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrAddlRprstn {
+entity FREIGHTORDER_0001.FrtOrdStgeBPAddrAddlRprstn {
   @Core.Computed : true
   @Common.Label : 'Stage UUID'
   @Common.QuickInfo : 'Transportation Order Stage UUID'
@@ -2407,8 +2554,8 @@ entity CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrAddlRprstn {
   @Common.QuickInfo : 'Region (State, Province, County)'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=REGIO'
   Region : String(3) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FrtOrdStgeBPAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FrtOrdStgeBPAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {  };
 };
 
 @cds.external : true
@@ -2420,8 +2567,13 @@ entity CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrAddlRprstn {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderStage', '_FrtOrdStgeBPAddrAddlRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-@Capabilities.FilterRestrictions.FilterExpressionRestrictions : [ { Property: EmailAddress, AllowedExpressions: 'MultiValue' } ]
-entity CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {
+@Capabilities.FilterRestrictions.FilterExpressionRestrictions : [
+  {
+    Property: EmailAddress,
+    AllowedExpressions: 'MultiValue'
+  }
+]
+entity FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {
   @Core.Computed : true
   @Common.Label : 'Stage UUID'
   @Common.QuickInfo : 'Transportation Order Stage UUID'
@@ -2488,10 +2640,10 @@ entity CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {
   @Common.QuickInfo : 'Complete Number: Dialing Code+Number+Extension'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=AD_FXNRLNG'
   InternationalFaxNumber : String(30) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderStage : Association to one CE_FREIGHTORDER_0001.FreightOrderStage {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderStage : Association to one FREIGHTORDER_0001.FreightOrderStage {  };
   @Common.Composition : true
-  _FrtOrdStgeBPAddrAddlRprstn : Composition of many CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrAddlRprstn {  };
+  _FrtOrdStgeBPAddrAddlRprstn : Composition of many FREIGHTORDER_0001.FrtOrdStgeBPAddrAddlRprstn {  };
 };
 
 @cds.external : true
@@ -2503,7 +2655,7 @@ entity CE_FREIGHTORDER_0001.FrtOrdStgeBPAddrDfltRprstn {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FrtOrdStopLocAddrDfltRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-entity CE_FREIGHTORDER_0001.FrtOrdStopLocAddrAddlRprstn {
+entity FREIGHTORDER_0001.FrtOrdStopLocAddrAddlRprstn {
   @Core.Computed : true
   @Common.Label : 'NodeID'
   key TransportationOrderStopUUID : UUID not null;
@@ -2553,8 +2705,8 @@ entity CE_FREIGHTORDER_0001.FrtOrdStopLocAddrAddlRprstn {
   @Common.QuickInfo : 'Region (State, Province, County)'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=REGIO'
   Region : String(3) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FrtOrdStopLocAddrDfltRprstn : Association to one CE_FREIGHTORDER_0001.FrtOrdStopLocAddrDfltRprstn {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FrtOrdStopLocAddrDfltRprstn : Association to one FREIGHTORDER_0001.FrtOrdStopLocAddrDfltRprstn {  };
 };
 
 @cds.external : true
@@ -2566,7 +2718,7 @@ entity CE_FREIGHTORDER_0001.FrtOrdStopLocAddrAddlRprstn {
 @Capabilities.UpdateRestrictions.Updatable : false
 @Capabilities.UpdateRestrictions.NonUpdatableNavigationProperties : [ '_FreightOrder', '_FreightOrderStop', '_FrtOrdStopLocAddrAddlRprstn' ]
 @Capabilities.UpdateRestrictions.QueryOptions.SelectSupported : true
-entity CE_FREIGHTORDER_0001.FrtOrdStopLocAddrDfltRprstn {
+entity FREIGHTORDER_0001.FrtOrdStopLocAddrDfltRprstn {
   @Core.Computed : true
   @Common.Label : 'NodeID'
   key TransportationOrderStopUUID : UUID not null;
@@ -2609,9 +2761,9 @@ entity CE_FREIGHTORDER_0001.FrtOrdStopLocAddrDfltRprstn {
   @Common.QuickInfo : 'Region (State, Province, County)'
   @Common.DocumentationRef : 'urn:sap-com:documentation:key?=type=DE&id=REGIO'
   Region : String(3) not null;
-  _FreightOrder : Association to one CE_FREIGHTORDER_0001.FreightOrder {  };
-  _FreightOrderStop : Association to one CE_FREIGHTORDER_0001.FreightOrderStop {  };
+  _FreightOrder : Association to one FREIGHTORDER_0001.FreightOrder {  };
+  _FreightOrderStop : Association to one FREIGHTORDER_0001.FreightOrderStop {  };
   @Common.Composition : true
-  _FrtOrdStopLocAddrAddlRprstn : Composition of many CE_FREIGHTORDER_0001.FrtOrdStopLocAddrAddlRprstn {  };
+  _FrtOrdStopLocAddrAddlRprstn : Composition of many FREIGHTORDER_0001.FrtOrdStopLocAddrAddlRprstn {  };
 };
 
