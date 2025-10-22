@@ -12,7 +12,7 @@ service AdminService {
         projection on api.FreightOrder {
             key TransportationOrderUUID,
                 TransportationOrder,
-                TranspOrdExecutingCarrier
+                Carrier
         };
 
     entity SRV_FreightOrder     as projection on DBFreightOrder;

@@ -22,6 +22,7 @@ import com.sap.cds.services.messaging.TopicMessageEventContext;
 import com.sap.cds.services.persistence.PersistenceService;
 
 import cds.gen.adminservice.AdminService_;
+import cds.gen.adminservice.FreightOrderExt;
 import cds.gen.adminservice.FreightOrderExt_;
 import cds.gen.adminservice.SRVFreightOrder;
 import cds.gen.adminservice.SRVFreightOrderItem;
@@ -49,8 +50,8 @@ public class ServiceHandler implements EventHandler {
     @On(service = "freightorderattachjava-messaging", event = "ce/sap/s4/beh/FreightOrder/Created/v1")
     public void receiveFreightOrderCreated(TopicMessageEventContext context) {
 
-        logger.info("admin service");
-        String msgId = context.getMessageId();
+        // logger.info("admin service");
+        // String msgId = context.getMessageId();
         Map<String, Object> payloadMap = context.getDataMap();
 
         String freightOrderUuid = payloadMap.get("TransportationOrderUUID").toString();
@@ -188,16 +189,28 @@ public class ServiceHandler implements EventHandler {
 
     @On(event = CqnService.EVENT_READ, entity = FreightOrderExt_.CDS_NAME)
     public void onReadFreightOrder(CdsReadEventContext context) {
-        CqnSelect query = Select.from(FreightOrder_.class)
-                .columns("TransportationOrderUUID", "TransportationOrder", " TranspOrdExecutingCarrier").limit(20);
+
+        logger.info("onReadFreightOrder called");
+        CqnSelect query = Select.from(FreightOrder_.class).limit(20);
 
         Result result = remotService.run(query);
+
+        // List<FreightOrderExt> freightOrderExtList = result.stream().map(row -> {
+        // FreightOrderExt freightOrderExt =
+        // cds.gen.adminservice.FreightOrderExt.create();
+
+        // // Map fields from the result row to FreightOrderExt
+        // freightOrderExt.setTransportationOrderUUID(row.get("TransportationOrderUUID"));
+        // freightOrderExt.setTransportationOrder(row.get("TransportationOrder"));
+        // freightOrderExt.setCarrier(row.get("Carrier"));
+        // // Add more field mappings as needed
+
+        // return freightOrderExt;
+        // }).toList();
 
         logger.info("Fetched Freight Orders: " + result.list().size());
 
         context.setResult(result);
-
-        logger.info("onReadFreightOrder called");
     }
 
 }

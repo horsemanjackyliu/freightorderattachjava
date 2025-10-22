@@ -2,10 +2,9 @@
 @cmisuri = https://api-sdm-di.cfapps.eu10.hana.ondemand.com
 
 //from uaa/clientid in sdm-key
-@cmisclientid = sb-769202bd-cbfd-4a88-b3bf-8d56fb27e41e!b149617|sdm-di-SDM_DI_PROD-prod!b41064
+@cmisclientid = sb-4fae8921-d66e-4624-ab25-640c682bee76!b149617|sdm-di-SDM_DI_PROD-prod!b41064
 //from uaa/clientsecret in sdm-key
-@cmisclientsecret = 05b385f0-df1b-447e-9a53-d3bc9d88190a$mBz68cCqs0-GHMIczQBnUOA3LCO6NxqDcjXLHPeT3IY=
-
+@cmisclientsecret = 137faac1-3320-47f1-9c84-10195bae7b48$BqSdXNqLl23IdkgVveeiy5SvB9UXab8xrNoNz4_4iu8=
 //from uaa/url in sdm-key
 @cmistokenurl = https://apjextabapsubdomain.authentication.eu10.hana.ondemand.com
 
